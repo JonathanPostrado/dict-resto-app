@@ -1,0 +1,12 @@
+.ItemBox{
+    width: calc(100% /3);
+    display: flex;
+    flex-direction: row;
+    border: 1px solid black;
+    padding: 25px;
+}
+
+.ItemBox img{
+    width: 35%;
+    margin-right: 25px;
+}

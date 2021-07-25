@@ -1,0 +1,16 @@
+#RestoApp {
+    width: 80%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+.display {
+    display: flex;
+}
+
+.CartDisplay {
+    padding: 0 15px;
+}
+.cart-img {
+    margin-right: 10px;
+}
