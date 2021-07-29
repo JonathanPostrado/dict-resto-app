@@ -42,3 +42,32 @@
     transform: rotate(360deg);
   }
 }
+
+table {
+  border-collapse: separate;
+  width: 100%;
+
+  
+}
+td,th {
+  /* border: 1px solid white; */
+  padding: 15px;
+  align-items: center;
+  text-align: center;
+  
+}
+.custom-td{
+  text-align: center;
+}
+
+.icon{
+  margin: 5px;
+}
+
+.btn{
+  width: 100%;
+}
+input[type=text]:not(.browser-default),input[type=number]:not(.browser-default) {
+  color: white;
+}
+

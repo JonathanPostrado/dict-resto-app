@@ -1,207 +1,196 @@
-import React from 'react';
+import { useState } from 'react';
 import FunctionalAddItemForm from './FunctionalAddItemForm.js';
-import FunctionalEditItemForm from './FunctionalEditItemForm.js';
 import FunctionalItemBox from './FunctionalItemBox.js';
 import './FunctionalRestoApp.css';
 
-class FunctionalRestoApp extends React.Component{
-    
-    state = {
-        items: [
-            {
-                id: 1,
-                name: "Burger",
-                price: 50,
-                category: "Food",
-                status: 'active',
-                image: "https://image.flaticon.com/icons/svg/1046/1046784.svg"
-            },
-            {
-                id: 2,
-                name: "Pizza",
-                price: 100,
-                category: "Food",
-                status: 'active',
-                image: "https://image.flaticon.com/icons/svg/1046/1046771.svg"
-            },
-            {
-                id: 3,
-                name: "Fries",
-                price: 25,
-                category: "Food",
-                status: 'active',
-                image: "https://image.flaticon.com/icons/svg/1046/1046786.svg"
-            },
-            {
-                id: 4,
-                name: "Coffee",
-                price: 35,
-                category: "Drink",
-                status: 'active',
-                image: "https://image.flaticon.com/icons/svg/1046/1046785.svg"
-            },
-            {
-                id: 5,
-                name: "Iced Tea",
-                price: 45,
-                category: "Drink",
-                status: 'active',
-                image: "https://image.flaticon.com/icons/svg/1046/1046782.svg"
-            },
-            {
-                id: 6,
-                name: "Hot Tea",
-                price: 45,
-                category: "Drink",
-                status: 'active',
-                image: "https://image.flaticon.com/icons/svg/1046/1046792.svg"
-            },
-        ],
-        filter: 'All',
-        cart: [],
-        editItem: null
+const FunctionalRestoApp = () => {
+    const [items, setItems] = useState([
+        {
+            id: 1,
+            name: "Burger",
+            price: 50,
+            category: "Food",
+            status: 'active',
+            image: "https://image.flaticon.com/icons/svg/1046/1046784.svg"
+        },
+        {
+            id: 2,
+            name: "Pizza",
+            price: 100,
+            category: "Food",
+            status: 'active',
+            image: "https://image.flaticon.com/icons/svg/1046/1046771.svg"
+        },
+        {
+            id: 3,
+            name: "Fries",
+            price: 25,
+            category: "Food",
+            status: 'active',
+            image: "https://image.flaticon.com/icons/svg/1046/1046786.svg"
+        },
+        {
+            id: 4,
+            name: "Coffee",
+            price: 35,
+            category: "Drink",
+            status: 'active',
+            image: "https://image.flaticon.com/icons/svg/1046/1046785.svg"
+        },
+        {
+            id: 5,
+            name: "Iced Tea",
+            price: 45,
+            category: "Drink",
+            status: 'active',
+            image: "https://image.flaticon.com/icons/svg/1046/1046782.svg"
+        },
+        {
+            id: 6,
+            name: "Hot Tea",
+            price: 45,
+            category: "Drink",
+            status: 'active',
+            image: "https://image.flaticon.com/icons/svg/1046/1046792.svg"
+        },
+    ])
+
+    const [filter, setFilter] = useState('All');
+    const [cart, setCart] = useState([])
+    const [editItem, setEdit] = useState(false)
+
+    const changeDisplay = (category) => {
+        setFilter(category)
     }
 
-    // itemDisplay = this.state.items.map(item =>
-    //     <ItemBox key={item.id} item={item} />
-        
-    // )
-
-
-    changeDisplay = (category) => {
-        this.setState({
-            filter: category
-        });
-    }
-
-    // 1.) create a function in parent
-    // 2.) pass that function as props to the child
-    // 3.) invoke the function in child
-
-    addItem = (newItem) => {
-        newItem.id = this.state.items.length + 1;
-        let itemsCopy = [...this.state.items];
+    const addItem = (newItem) => {
+        newItem.id = items.length + 1;
+        const itemsCopy = [...items];
         itemsCopy.push(newItem);
 
-        this.setState({
-            items: itemsCopy
-        })
+        setItems(itemsCopy)
     }
 
-    addToCart = (item) =>{
-        let cartCopy = [...this.state.cart];
-
-        let index = cartCopy.findIndex(cartItem => cartItem.id === item.id)
+    const addToCart = (item) =>{
+        const cartCopy = [...cart];
+        const index = cartCopy.findIndex(cartItem => cartItem.id === item.id)
         if (index === -1) {
             item.quantity = 1;
             cartCopy.push(item);
         } else {
             cartCopy[index].quantity++;
         }
-
-        this.setState({
-            cart: cartCopy
-        });
-
-        // let exists = false;
-        // cartCopy.forEach(cartItem => {
-        //     if (cartItem.id === item.id) {
-        //         exists = true;
-
-        //         cartItem.quantity++;
-        //     }
-        // });
-
-        // if (!exists) {
-        //     item.quantity = 1;
-        //     cartCopy.push(item);
-        // }
-
-        // this.setState({
-        //     cart: cartCopy
-        // });
+        setCart(cartCopy)
     }
 
-    deleteItem = (item) => {
-        let itemsCopy = [...this.state.items];
-
-        itemsCopy = itemsCopy.filter(i => i.id !== item.id)
-
-        this.setState({
-            items: itemsCopy
-        });
+    const deleteItem = (item) => {
+        const index = items.indexOf(item)
+        const itemsCopy = [...items]
+        itemsCopy.splice(index,1)
+        setItems(itemsCopy)
     }
 
-    editItem = (item) => {
-        this.setState({
-            editItem: item
-        });
+    const editItems = (item) => {
+        setEdit(item)
     }
 
-    updateItem = (item) => {
-        let itemsCopy = [...this.state.items];
-
-        let index = itemsCopy.findIndex(i => i.id === item.id);
+    const updateItem = (item) => {
+        const itemsCopy = [...items];
+        const index = itemsCopy.findIndex(i => i.id === item.id);
         itemsCopy[index] = item;
-
-        this.setState({
-            items: itemsCopy,
-            editItem: null
-        });
+        setItems(itemsCopy)
+        setEdit(false)
     }
 
+    const itemFiltered = (filter === 'All') ? 
+            items : 
+            items.filter(item => item.category === filter);
 
-    render(){
-        let items = this.state.filter === 'All' ? 
-            this.state.items : 
-            this.state.items.filter(item => item.category === this.state.filter);
+    const itemDisplay = itemFiltered
+        .map(item =>
+            <FunctionalItemBox key={item.id} item={item} edit={editItem} addToCart={addToCart} deleteItem={deleteItem} editItem={editItems}/>
+            
+    )
+    let cartDisplay = cart
+    .map(item => {
+            return (
+                <tr>
+                    <td><img src={item.image} alt={item.name} width={80} /></td>
+                    <td>x {item.quantity}</td>
+                    <td> Php {item.quantity * item.price}</td>
+                </tr>
+            )
 
-        let itemDisplay = items
-            .map(item =>
-                <FunctionalItemBox key={item.id} item={item} addToCart={this.addToCart} deleteItem={this.deleteItem} editItem={this.editItem}/>
-                
-        )
-        let cartDisplay = this.state.cart
-        .map(item => {
-                return <div>
-                    <img src={item.image} alt={item.name} width={35} />
-                    x {item.quantity}
-                    Php {item.quantity * item.price}
-                </div>
+    })
 
-            })
-
-        return(
+    return(
+        <div>
+            <div><br />
+                <table>
+                        <thead>
+                            <tr>
+                                <th colSpan="5">{editItem ? 'EDIT ITEM' : 'ADD ITEM'}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <FunctionalAddItemForm item={items} addItem={addItem} editItem={editItem}  updateItem= {updateItem}/> <br />
+                        </tbody>
+                    </table>
+            </div>
             <div>
-                <FunctionalAddItemForm addItem={this.addItem} editItem = {this.state.editItem}  updateItem= {this.updateItem}/>
-                <div>
-                    <button onClick={() => this.changeDisplay('All')}>All</button>
-                    <button onClick={() => this.changeDisplay('Food')}>Food</button>
-                    <button onClick={() => this.changeDisplay('Drink')}>Drink</button>
-                </div>
-                {/* <div className="restoApp">
-                    {itemDisplay}
-                </div> */}
-                {/* <FormActivity /> */}
+                <table>
+                        <thead>
+                            <tr>
+                                <th colSpan="3">Sort by Categories</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <td><button className="btn blue btn-block" onClick={() => changeDisplay('All')}>All</button></td>
+                            <td><button className="btn blue btn-block" onClick={() => changeDisplay('Food')}>Food</button></td>
+                            <td><button className="btn blue btn-block"onClick={() => changeDisplay('Drink')}>Drink</button></td>
+                        </tbody>
+                    </table>
+            </div> <br />
+            <div id="display">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th colSpan="5">Items</th>
+                            </tr>
+                            <tr>
+                                <th>Image</th>
+                                <th>Name</th>
+                                <th>Category</th>
+                                <th>Price</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {itemDisplay}
+                        </tbody>
+                    </table>
+            </div> <br />
 
-                {/* {this.state.editItem &&
-                    <FunctionalEditItemForm editItem = {this.state.editItem}  updateItem= {this.updateItem}/>
-                } */}
-
-                <h1>Resto App</h1>
-                <div className="display">
-                    <div id="RestoApp">
-                        {itemDisplay}
-                    </div>
-                    <div className="CartDisplay">
-                        <h2>Cart</h2>
-                        {cartDisplay}
-                    </div>
-                </div>
+            <div>    
+                    <table>
+                        <thead>
+                            <tr>
+                                <th colSpan="3">Cart</th>
+                            </tr>
+                            <tr>
+                                <th>Image</th>
+                                <th>Quantity</th>
+                                <th>Price</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {cartDisplay}
+                        </tbody>
+                    </table>
 
             </div>
-        );
-    }
+        </div>
+    )
 
 }
 

@@ -1,7 +1,5 @@
-import { render } from '@testing-library/react';
-import { update } from 'lodash';
-// import React from 'react'
 import { useState, useEffect } from 'react';
+import './FunctionalRestoApp.css';
 
 const FunctionalAddItemForm = (props) => {
 
@@ -50,102 +48,43 @@ const FunctionalAddItemForm = (props) => {
     }
 
     return (
-        <div>
+        <tr>
+            <td className="custom-td">
             Name: <input 
                 type="text"
                 name="name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                // onChange={this.inputChangeHandler}
             />
+            </td>
+            <td className="custom-td">
             Category: <input 
                 type="text"
                 name="category"
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
-                // onChange={this.inputChangeHandler}
             />
+            </td>
+            <td className="custom-td">
             Price: <input 
                 type="number"
                 name="price"
                 value={price}
                 onChange={(e) => setPrice(e.target.value )}
-                // onChange={this.inputChangeHandler}
             />
+            </td>
+            <td className="custom-td">
             Image: <input 
                 type="text"
                 name="image"
                 value={image}
                 onChange={(e) => setImage(e.target.value )}
-                // onChange={this.inputChangeHandler}
             />
-            <button onClick={btnClickHandler}>{props.editItem ? 'EDIT ITEM' : 'ADD ITEM'}</button>
-        </div>
+            </td>
+            <td>
+            <button className="btn blue btn-block" onClick={btnClickHandler}>{props.editItem ? 'EDIT ITEM' : 'ADD ITEM'}</button></td>
+        </tr>
     )
-
 }
-
-// class FunctionalAddItemForm extends React.Component{
-//     state = {
-//         name: 'burger',
-//         category: '',
-//         price: 0,
-//         image: ''
-//     }
-
-//     inputChangeHandler = (e) => {
-//         this.setState({
-//             [e.target.name]: e.target.value
-//         })
-//     }
-
-//     addNewItem = () => {
-//         let newItem ={
-//             name: this.state.name,
-//             price: this.state.price,
-//             category: this.state.category,
-//             image: this.state.image
-//         }
-//         this.props.addItem(newItem);
-//     }
-
-
-//     render() {
-//         return (
-//             <div>
-//                 Name: <input 
-//                     type="text"
-//                     name="name"
-//                     value={this.state.name}
-//                     // onChange={(e) => this.setState({ name: e.target.value })}
-//                     onChange={this.inputChangeHandler}
-//                 />
-//                 Category: <input 
-//                     type="text"
-//                     name="category"
-//                     value={this.state.category}
-//                     // onChange={(e) => this.setState({ category: e.target.value })}
-//                     onChange={this.inputChangeHandler}
-//                 />
-//                 Price: <input 
-//                     type="number"
-//                     name="price"
-//                     value={this.state.price}
-//                     // onChange={(e) => this.setState({ price: e.target.value })}
-//                     onChange={this.inputChangeHandler}
-//                 />
-//                 Image: <input 
-//                     type="text"
-//                     name="image"
-//                     value={this.state.image}
-//                     // onChange={(e) => this.setState({ image: e.target.value })}
-//                     onChange={this.inputChangeHandler}
-//                 />
-//                 <button onClick={this.addNewItem}>Add</button>
-//             </div>
-//         )
-//     }
-// }
-
 
 export default FunctionalAddItemForm;
